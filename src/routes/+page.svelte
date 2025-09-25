@@ -1,6 +1,11 @@
 <script>
+	import Menu from '$lib/Menu.svelte';
 	export let data;
+
+	let isMenuOpen = false;
 </script>
+
+
 
 <svelte:head>
 	<title>SolidByte</title>
@@ -8,11 +13,16 @@
 
 <header>
 	<a href="/" class="logo">
-		<img src="/logo-large.png" alt="SolidByte logo" />
+		<img src="/logoMed.svg" alt="SolidByte logo" />
 	</a>
-	<a href="/menu" class="menu-icon">
-		<img src="/menu-icon.jpg" alt="Menu" />
-	</a>
+	<div class="menu-wrapper-context">
+		<button class="menu-icon" on:click={() => (isMenuOpen = !isMenuOpen)} aria-label="Open menu">
+			<i class="fa-solid fa-bars"></i>
+		</button>
+		{#if isMenuOpen}
+			<Menu on:close={() => (isMenuOpen = false)} />
+		{/if}
+	</div>
 </header>
 
 <main>
@@ -32,17 +42,29 @@
 		justify-content: space-between;
 		align-items: center;
 		padding: 2rem;
-		border: 2px dashed #ccc; /* A light grey dotted border */
 		margin: 0 1%; /* Add horizontal margin to match content */
+
+		/* Sticky Header styles */
+		position: sticky;
+		top: 0;
+		background-color: white;
+		z-index: 10; /* Ensures header stays above the content */
 	}
 
 	.logo img {
 		width: 200px;
 	}
 
-	.menu-icon img {
-		width: 50px; /* Adjust size as needed */
-		height: auto;
+	.menu-wrapper-context {
+		position: relative; /* This is the new positioning context */
+	}
+
+	.menu-icon {
+		background: none;
+		border: none;
+		cursor: pointer;
+		font-size: 2rem; /* Adjust icon size */
+		color: #333; /* A soft black for the icon */
 	}
 
 	main {
@@ -64,31 +86,50 @@
 		box-shadow: 17px 17px 2px rgba(0, 0, 0, 0.3); /* A sharper, less diffuse shadow */
 		border-radius: 40px; /* Adds rounded corners */
 		border: 1px solid black; /* Adds a thin black border */
+		position: relative; /* Crucial for z-index */
+		z-index: 1; /* Default stacking order */
 	}
 
-	.grid-item {
-		display: block; /* Good practice for link wrappers */
-		width: 90%;
-		max-width: 1300px; /* Prevents it from becoming too wide on large screens */
-		overflow: hidden; /* Keeps the hover effect clean */
-		box-shadow: 17px 17px 2px rgba(0, 0, 0, 0.3); /* A sharper, less diffuse shadow */
-		border-radius: 40px; /* Adds rounded corners */
-		border: 1px solid black; /* Adds a thin black border */
-		transition: transform 0.2s; /* Apply transition to the container */
-	}
-
+	/* Lift the container on hover to prevent overlap issues */
 	.grid-item:hover {
-		transform: scale(1.05); /* Scale the container on hover */
+		z-index: 2;
 	}
 
 	.grid-item img {
 		width: 100%;
 		height: auto; /* Allows the image to scale proportionally */
 		display: block; /* Removes any extra space below the image */
+		transition:
+			filter 0.3s ease,
+			transform 0.3s ease; /* Animate both filter and transform */
+	}
+
+	/* Apply image effects on hover */
+	.grid-item:hover img {
+		filter: brightness(1.2) saturate(0.5);
+		transform: scale(1.05); /* Scale the image, not the container */
 	}
 
 	.title {
-		display: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: white;
+		font-size: 2rem;
+		font-weight: bold;
+		text-align: center;
+		background-color: rgba(0, 0, 0, 0.5);
+		opacity: 0; /* Hidden by default */
+		transition: opacity 0.3s ease;
+	}
+
+	.grid-item:hover .title {
+		opacity: 1; /* Show title on hover */
 	}
 
 	a {
