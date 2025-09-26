@@ -106,7 +106,7 @@
 
 	/* Apply image effects on hover */
 	.grid-item:hover img {
-		filter: brightness(1.2) saturate(0.5);
+		filter: brightness(1.8) saturate(0.1); /* Seriously brighten and desaturate */
 		transform: scale(1.05); /* Scale the image, not the container */
 	}
 
@@ -117,13 +117,16 @@
 		width: 100%;
 		height: 100%;
 		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: white;
+		align-items: flex-end; /* Positions text at the bottom */
+		justify-content: flex-end; /* Positions text to the right */
+		padding: 1.5rem; /* Adds some space from the corner */
+		box-sizing: border-box; /* Ensures padding is included in the element's box */
+		color: black;
+		font-family: 'Blender Medium', sans-serif; /* Apply the custom font */
 		font-size: 2rem;
-		font-weight: bold;
-		text-align: center;
-		background-color: rgba(0, 0, 0, 0.5);
+		font-weight: normal; /* Use the font's own weight */
+		text-transform: uppercase; /* Makes text all caps */
+		background-color: rgba(255, 255, 255, 0.5); /* Changed to semi-transparent white */
 		opacity: 0; /* Hidden by default */
 		transition: opacity 0.3s ease;
 	}

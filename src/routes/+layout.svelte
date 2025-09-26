@@ -17,4 +17,10 @@
 		background-color: white;
 		color: black;
 	}
+	@font-face {
+		font-family: 'Blender Medium';
+		src: url('/fonts/Blender-Medium.otf') format('opentype');
+		font-weight: normal;
+		font-style: normal;
+	}
 </style>
