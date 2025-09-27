@@ -85,7 +85,7 @@
 		overflow: hidden; /* Keeps the hover effect clean */
 		box-shadow: 17px 17px 2px rgba(0, 0, 0, 0.3); /* A sharper, less diffuse shadow */
 		border-radius: 40px; /* Adds rounded corners */
-		border: 1px solid black; /* Adds a thin black border */
+		/* border: 3px solid lightgray; /* Adds a thin border, set, for now, to lightGrey */
 		position: relative; /* Crucial for z-index */
 		z-index: 1; /* Default stacking order */
 	}
