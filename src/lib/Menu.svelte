@@ -24,41 +24,20 @@
 	.menu-container {
 		position: absolute;
 		/* Positioned perfectly relative to the parent wrapper */
-		top: 100%; /* Place it right below the icon */
-		right: 63px; /* Align its right edge with the icon's right edge */
-		transform: translateY(-25px); /* move it up to the centre of the icon */
-		background: white;
-		padding: 2rem;
-		width: 220px;
+		top: 75%; /* Place it right below the icon */
+		right: 5vw; /* Was 63px */
+		transform: translateY(-0.9765vw); /* Was -25px */
+			/* background: white; */
+		padding: 1.25vw; /* Was 2rem */
+		width: 8.59375vw; /* Was 220px */
 		text-align: center;
-		border: 2px solid black;
+			/* border: 0.0781vw solid black; /* Was 2px */
 		z-index: 20; /* Ensure it appears above other content */
-	}
 
-	/* The white, inner part of the triangle */
-	.menu-container::before {
-		content: '';
-		position: absolute;
-		/* Positioned at the top-right corner */
-		top: 0px; /* Aligned with the inside of the top border */
-		right: -20px;
-		border-width: 10px;
-		border-style: solid;
-		border-color: white transparent transparent white;
-		z-index: 2;
-	}
-
-	/* The black, outer border of the triangle */
-	.menu-container::after {
-		content: '';
-		position: absolute;
-		/* Positioned at the top-right corner */
-		top: -2px; /* Aligned with the outside of the top border */
-		right: -24px;
-		border-width: 11px;
-		border-style: solid;
-		border-color: black transparent transparent black;
-		z-index: 1;
+		/* New SVG Background */
+		background-image: url('/menu-background.svg');
+		background-size: 100% 100%; /* Stretch the SVG to fit the container */
+		background-repeat: no-repeat;
 	}
 
 	nav ul {
@@ -68,15 +47,15 @@
 	}
 
 	nav li {
-		margin-bottom: 2rem;
+		margin-bottom: 1.25vw; /* Was 2rem */
 	}
 
 	nav a {
 		color: black;
 		text-decoration: none;
-		font-size: 2rem;
+		font-size: 1.25vw; /* Was 2rem */
 		font-weight: bold;
-		letter-spacing: 2px;
+		letter-spacing: 0.0781vw; /* Was 2px */
 	}
 
 	nav a:hover {
@@ -84,12 +63,12 @@
 	}
 
 	.social-icons {
-		margin-top: 3rem;
+		margin-top: 1.875vw; /* Was 3rem */
 	}
 
 	.social-icons a {
 		color: black;
-		font-size: 2.5rem;
-		margin: 0 1.5rem;
+		font-size: 1.5625vw; /* Was 2.5rem */
+		margin: 0 0.9375vw; /* Was 1.5rem */
 	}
 </style>
