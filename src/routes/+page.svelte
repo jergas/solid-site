@@ -54,7 +54,7 @@
 	}
 
 	.logo img {
-		height: 5vh;
+		height: 5vw;
 	}
 
 	.menu-wrapper-context {
@@ -65,7 +65,7 @@
 		background: none;
 		border: none;
 		cursor: pointer;
-		font-size: 5vh;
+		font-size: 5vw;
 		color: #333;
 	}
 
