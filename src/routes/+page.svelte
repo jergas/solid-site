@@ -27,7 +27,18 @@
 		<div class="grid">
 			{#each data.landing as item}
 				<a href={item.href} class="grid-item">
-					<img src={item.img} alt={item.title.en} />
+					{#if item.img.endsWith('.mp4')}
+						<video
+							src={item.img}
+							autoplay
+							muted
+							loop
+							playsinline
+							aria-label={item.title.en}
+						></video>
+					{:else}
+						<img src={item.img} alt={item.title.en} />
+					{/if}
 					<div class="title">{item.title.en}</div>
 				</a>
 			{/each}
@@ -83,6 +94,7 @@
 	.grid-item {
 		display: block;
 		width: 90%;
+		aspect-ratio: 1355 / 364;
 		max-width: 1300px;
 		overflow: hidden;
 		box-shadow: 1.5vw 1.5vw 0.078vw rgba(0, 0, 0, 0.25);
@@ -95,9 +107,24 @@
 		z-index: 2;
 	}
 
+	.grid-item video {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+		transition: filter 0.3s ease, transform 0.3s ease;
+	}
+
+	.grid-item:hover video {
+		filter: brightness(1.8) saturate(0.1);
+		transform: scale(1.05);
+	}
+
 	.grid-item img {
 		width: 100%;
-		height: auto;
+		height: 100%;
+		object-fit: cover;
+		object-position: 50% 30%; /* default — change this to adjust focus */
 		display: block;
 		transition: filter 0.3s ease, transform 0.3s ease;
 	}
