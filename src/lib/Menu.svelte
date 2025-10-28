@@ -9,14 +9,15 @@
 <div class="menu-container" transition:fade>
 	<nav>
 			<ul>
-				<li><a href="/proyecto">PROYECTO</a></li>
-				<li><a href="/servicio">SERVICIO</a></li>
-				<li><a href="/contacto">CONTACTO</a></li>
+				<li><a href="/nosotros/">NOSOTROS</a></li>
+				<li><a href="/proyectos/">PROYECTOS</a></li>
+				<li><a href="/servicios/">SERVICIOS</a></li>
+				<li><a href="/contacto/">CONTACTO</a></li>
 			</ul>
 		</nav>
 		<div class="social-icons">
-			<a href="https://tiktok.com" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-			<a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+			<a href="https://tiktok.com/" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+			<a href="https://instagram.com/solidbyte.io/" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
 		</div>
 	</div>
 
