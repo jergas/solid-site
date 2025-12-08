@@ -1,17 +1,17 @@
 <script>
-	export let project;
+	export let directory;
 
-	$: projectMedia = project.media
-		? project.media.map((m) => ({
+	$: directoryMedia = directory.media
+		? directory.media.map((m) => ({
 				...m,
-				path: `/${project.path}/${m.filename}`
+				path: `/${directory.path}/${m.filename}`
 			}))
 		: [];
 </script>
 
 <div class="project-container">
 	<div class="media-column">
-		{#each projectMedia as media}
+		{#each directoryMedia as media}
 			{#if media.path.endsWith('.mp4')}
 				<video
 					src={media.path}
@@ -20,18 +20,18 @@
 					loop
 					playsinline
 					controls
-					aria-label={project.title.en}
+					aria-label={directory.title.en}
 				/>
 			{:else}
-				<img src={media.path} alt={media.title || project.title.en} />
+				<img src={media.path} alt={media.title || directory.title.en} />
 			{/if}
 		{/each}
 	</div>
 
 	<div class="text-column">
-		<h1>{project.title.en}</h1>
+		<h1>{directory.title.en}</h1>
 		<div class="text-content">
-			{@html project.text || ''}
+			{@html directory.text || ''}
 		</div>
 	</div>
 </div>

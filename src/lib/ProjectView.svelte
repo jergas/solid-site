@@ -23,6 +23,6 @@
 	</header>
 
 	<main>
-		<ContentView {project} />
+		<ContentView directory={project} />
 	</main>
 </div>

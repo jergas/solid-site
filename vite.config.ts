@@ -12,7 +12,7 @@ export default defineConfig({
 					dest: '.'
 				},
 				{
-					src: 'src/routes/work',
+					src: 'work',
 					dest: '.'
 				}
 			]

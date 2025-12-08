@@ -1,9 +1,9 @@
 import { fileURLToPath } from 'url';
-import { dirname, relative } from 'path';
+import path, { dirname, relative } from 'path';
 import { loadLanding, getDirectoryMedia } from '$lib/SolidLibrary';
 
 const __filename = fileURLToPath(import.meta.url);
-const DIR_PATH = dirname(__filename);
+// const DIR_PATH = dirname(__filename);
 
 export function load({ url }) {
     const landing = loadLanding();
@@ -16,7 +16,7 @@ export function load({ url }) {
         console.error(`Project not found for path: ${url.pathname}`);
     }
 
-    const { media, text } = getDirectoryMedia(DIR_PATH);
+    // const { media, text } = getDirectoryMedia(DIR_PATH);
 
     // We also need the relative path from project root to this directory for constructing media URLs in ContentView?
     // ContentView uses `project.path` (e.g. "src/routes/work/uncertainty" or relative path?).
@@ -62,7 +62,17 @@ export function load({ url }) {
     // But `DIR_PATH` is absolute.
     // `process.cwd()` is usually the project root in SvelteKit adapters/dev.
     
-    const relativePath = relative(process.cwd(), DIR_PATH);
+    // Construct the keys for accessing the source data (in work/ at root)
+    // url.pathname is e.g. /work/uncertainty
+    // relativePath for fs reading: work/uncertainty (relative to CWD/root)
+    const relativeSrcPath = url.pathname.replace(/^\/+/, '');
+    const sourcePath = path.resolve(process.cwd(), relativeSrcPath);
+
+    const { media, text } = getDirectoryMedia(sourcePath);
+
+    // For the frontend, the path to assets is also e.g. "work/uncertainty" 
+    // because vite-plugin-static-copy copies "work" to root of build.
+    const relativePath = relativeSrcPath;
 
     return {
         project: {
