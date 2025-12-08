@@ -1,0 +1,14 @@
+[
+        {"title":{"en":"Plataformas Automatizadas"},
+        "img":"/img/landing/plataformas-vid1.mp4",
+        "href":"/work/plataformas"
+        },
+        {"title":{"en":"Uncertainty and Collapse","es":"Incertidumbre y Colapso"},
+        "img":"/img/landing/uncertainty1.jpg",
+        "href":"/work/uncertainty"
+        },
+        {"title":{"en":"Tecbot","es":"Tecbot"},
+        "img":"/img/landing/tecbot1.jpg",
+        "href":"/work/tecbot"
+        }
+]

@@ -1,0 +1,6 @@
+<script>
+    import ProjectView from '$lib/ProjectView.svelte';
+    export let data;
+</script>
+
+<ProjectView project={data.project} />

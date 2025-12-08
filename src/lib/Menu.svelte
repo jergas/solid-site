@@ -29,9 +29,9 @@
 		right: 5vw; /* Was 63px */
 		transform: translateY(-0.9765vw); /* Was -25px */
 			/* background: white; */
-		padding: 1.25vw; /* Was 2rem */
-		width: 8.59375vw; /* Was 220px */
-		text-align: center;
+		padding: 0.75vw; /* Sets the internal spacing of the menu box */
+		width: 13vw; /* Sets the width of the menu box */
+		padding-left: 5vw; /* 20% of the container's width */
 			/* border: 0.0781vw solid black; /* Was 2px */
 		z-index: 20; /* Ensure it appears above other content */
 

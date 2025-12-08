@@ -1,0 +1,75 @@
+import { fileURLToPath } from 'url';
+import { dirname, relative } from 'path';
+import { loadLanding, getDirectoryMedia } from '$lib/SolidLibrary';
+
+const __filename = fileURLToPath(import.meta.url);
+const DIR_PATH = dirname(__filename);
+
+export function load({ url }) {
+    const landing = loadLanding();
+    // Find the project that matches the current URL
+    // e.g. /work/uncertainty
+    const projectInfo = landing.find(p => p.href === url.pathname);
+    
+    if (!projectInfo) {
+        // Fallback or error handling if needed, though with static generation this might not happen if links are correct
+        console.error(`Project not found for path: ${url.pathname}`);
+    }
+
+    const { media, text } = getDirectoryMedia(DIR_PATH);
+
+    // We also need the relative path from project root to this directory for constructing media URLs in ContentView?
+    // ContentView uses `project.path` (e.g. "src/routes/work/uncertainty" or relative path?).
+    // In original code: `const relativePath = relative(PROJECT_ROOT, DIR_PATH);`
+    // And passed `path: relativePath`.
+    // Wait, ContentView does: `path: /${project.path}/${m.filename}`
+    // If project.path is `src/routes/work/uncertainty`, then URL is `/src/routes/work/uncertainty/image.jpg`.
+    // That seems wrong for SvelteKit static assets unless they are imported?
+    // But `src/` is not served statically usually. `static/` folder is.
+    // However, the original code had: `const files = fs.readdirSync(DIR_PATH)...`
+    // And `const relativePath = relative(PROJECT_ROOT, DIR_PATH);`
+    // If `src` is in `PROJECT_ROOT`, then `relativePath` is `src/routes/work/uncertainty`.
+    // SvelteKit Vite dev server might serve `src` files directly?
+    // Let's assume we need to replicate the existing logic for `path`.
+    
+    // We can assume SolidLibrary is in `src/lib`, so 2 levels up is `src`? No `src/lib` is 2 levels up from `src/lib/SolidLibrary.js`.
+    // `PROJECT_ROOT` in `SolidLibrary` was set to `path.resolve(__dirname, '../../')`.
+    // So if file is `src/lib/SolidLibrary.js`, `dirname` is `src/lib`. `../../` is `root`.
+    
+    // In this template, we don't have access to `PROJECT_ROOT` from `SolidLibrary` unless we export it or calculate it again.
+    // Let's calculate it again to be safe and independent.
+    // Actually, `SolidLibrary.js` uses `PROJECT_ROOT`.
+    // But here inside the `load` function running in the page, we need to pass `path` to the frontend.
+    
+    // Original calculation:
+    // const PROJECT_ROOT = dirname(dirname(dirname(dirname(DIR_PATH)))); // 4 levels up
+    // This is brittle if depth changes.
+    // But `init-pages.js` will verify directory existence.
+    // Let's use `url.pathname` (without leading slash) as the path?
+    // If we serve images from the same directory as the page component, SvelteKit (Vite) allows importing them.
+    // But `ContentView` constructs string paths: `/${project.path}/${m.filename}`.
+    // If `project.path` is `work/uncertainty`, then `/work/uncertainty/image.jpg`.
+    // Does `/work/uncertainty/image.jpg` resolve to the file?
+    // In SvelteKit, routes are directories. Files inside them are not automatically served as static assets unless configured.
+    // But maybe they are using the rule that `+page.svelte` is served at `/work/uncertainty`, and assets at `/work/uncertainty/foo.jpg` are handled?
+    // Let's stick to what the original code did: `relative(PROJECT_ROOT, DIR_PATH)`.
+    
+    // We'll calculate PROJECT_ROOT.
+    // Or we can import it? No.
+    // Let's re-calculate.
+    // We know `landing.json` is at root. We can find root by looking for it? Or just assume CWD is root (usually true for node process)?
+    // `fs` operations usually work with CWD.
+    // But `DIR_PATH` is absolute.
+    // `process.cwd()` is usually the project root in SvelteKit adapters/dev.
+    
+    const relativePath = relative(process.cwd(), DIR_PATH);
+
+    return {
+        project: {
+            ...projectInfo,
+            path: relativePath,
+            media,
+            text
+        }
+    };
+}

@@ -10,6 +10,10 @@ export default defineConfig({
 				{
 					src: 'img',
 					dest: '.'
+				},
+				{
+					src: 'src/routes/work',
+					dest: '.'
 				}
 			]
 		})
