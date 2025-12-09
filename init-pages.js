@@ -73,9 +73,42 @@ try {
         createPageSvelte(dirPath);
     }
 
+    // Process Menu
+    initMenu();
+
     console.log('Successfully initialized all project pages.');
 
 } catch (error) {
     console.error('An unexpected error occurred:', error);
     process.exit(1);
+}
+
+function initMenu() {
+    const menuRoot = path.join(dirname, 'menu');
+    if (!fs.existsSync(menuRoot)) {
+        console.log('No menu directory found, skipping menu init.');
+        return;
+    }
+
+    const items = fs.readdirSync(menuRoot)
+        .filter(item => {
+            const fullPath = path.join(menuRoot, item);
+            return fs.statSync(fullPath).isDirectory();
+        });
+
+    console.log(`Found ${items.length} menu items.`);
+
+    for (const item of items) {
+        const sourceDir = path.join(menuRoot, item);
+        const targetDir = path.join(dirname, 'src', 'routes', item); // e.g. src/routes/nosotros
+
+        console.log(`Processing Menu: /${item}...`);
+
+        if (!fs.existsSync(targetDir)) {
+            fs.mkdirSync(targetDir, { recursive: true });
+        }
+
+        createPageServer(targetDir);
+        createPageSvelte(targetDir);
+    }
 }

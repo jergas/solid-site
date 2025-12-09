@@ -1,5 +1,6 @@
 <script>
 	export let directory;
+	import ContactForm from './ContactForm.svelte';
 
 	$: directoryMedia = directory.media
 		? directory.media.map((m) => ({
@@ -33,6 +34,9 @@
 		<div class="text-content">
 			{@html directory.text || ''}
 		</div>
+		{#if directory.path.includes('contacto')}
+			<ContactForm />
+		{/if}
 	</div>
 </div>
 

@@ -14,6 +14,10 @@ export default defineConfig({
 				{
 					src: 'work',
 					dest: '.'
+				},
+				{
+					src: 'menu',
+					dest: '.'
 				}
 			]
 		})

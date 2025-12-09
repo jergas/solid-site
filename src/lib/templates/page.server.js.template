@@ -1,5 +1,6 @@
 import { fileURLToPath } from 'url';
 import path, { dirname, relative } from 'path';
+import fs from 'fs';
 import { loadLanding, getDirectoryMedia } from '$lib/SolidLibrary';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -66,9 +67,36 @@ export function load({ url }) {
     // url.pathname is e.g. /work/uncertainty
     // relativePath for fs reading: work/uncertainty (relative to CWD/root)
     const relativeSrcPath = url.pathname.replace(/^\/+/, '');
-    const sourcePath = path.resolve(process.cwd(), relativeSrcPath);
-
-    const { media, text } = getDirectoryMedia(sourcePath);
+    let sourcePath = path.resolve(process.cwd(), relativeSrcPath);
+    
+    // If the path doesn't exist at root (e.g. 'contacto'), check if it exists within 'menu/'
+    // (e.g. 'menu/contacto')
+    
+    // Better logic:
+    // We can infer it's a menu item if it doesn't start with 'work'?
+    // Or just check existence.
+    // I need fs. check top imports.
+    // Top imports: import path, { dirname, relative } from 'path'; import { loadLanding, getDirectoryMedia } from '$lib/SolidLibrary';
+    // 'fs' is not imported. 
+    // BUT getDirectoryMedia handles non-existent paths by returning empty! 
+    // "if (!fs.existsSync(dirPath)) { return { media: [], text: '' }; }"
+    
+    // So if I pass the wrong path, I get empty data.
+    // I can try both paths.
+    
+    let data = getDirectoryMedia(sourcePath);
+    
+    if ((!data.media.length && !data.text) && !relativeSrcPath.startsWith('work/')) {
+         // Try menu/ folder
+         const menuPath = path.resolve(process.cwd(), 'menu', relativeSrcPath);
+         const menuData = getDirectoryMedia(menuPath);
+         if (menuData.media.length || menuData.text) {
+             sourcePath = menuPath;
+             data = menuData;
+         }
+    }
+    
+    const { media, text } = data;
 
     // For the frontend, the path to assets is also e.g. "work/uncertainty" 
     // because vite-plugin-static-copy copies "work" to root of build.
