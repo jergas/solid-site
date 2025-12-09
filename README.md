@@ -5,21 +5,20 @@ This is a sveltekit app that takes a landing.json file with a certain format (a 
 The landing.json file needs to be provided, along with the directory containing the images, and the directory containing the content the index will link to. A "static" directory also needs to be provided, with the images of the logo and the menu icon.
 
 
-# sv
+## Setup & Installation
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+To set up the environment for development:
 
-## Creating a project
+1.  **Install Dependencies:**
+    ```sh
+    npm install
+    ```
 
-If you're seeing this, you've probably already done this step. Congrats!
-
-```sh
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
-```
+2.  **Initialize Project Pages:**
+    This script generates the necessary route files based on your `landing.json`, `menu/`, and `work/` directories.
+    ```sh
+    node init-pages.js
+    ```
 
 ## Developing
 
