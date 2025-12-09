@@ -10,43 +10,70 @@
 		: [];
 </script>
 
-<div class="project-container">
-	<div class="media-column">
-		{#each directoryMedia as media}
-			{#if media.path.endsWith('.mp4')}
-				<video
-					src={media.path}
-					autoplay
-					muted
-					loop
-					playsinline
-					controls
-					aria-label={directory.title.en}
-				/>
-			{:else}
-				<img src={media.path} alt={media.title || directory.title.en} />
-			{/if}
-		{/each}
-	</div>
-
-	<div class="text-column">
-		<h1>{directory.title.en}</h1>
-		<div class="text-content">
-			{@html directory.text || ''}
+<div class="content-wrapper">
+	<h1 class="content-title">{directory.title.en}</h1>
+	<div class="content-container" class:no-media={directoryMedia.length === 0}>
+		<div class="media-column">
+			{#each directoryMedia as media}
+				{#if media.path.endsWith('.mp4')}
+					<video
+						src={media.path}
+						autoplay
+						muted
+						loop
+						playsinline
+						controls
+						aria-label={directory.title.en}
+					/>
+				{:else}
+					<img src={media.path} alt={media.title || directory.title.en} />
+				{/if}
+			{/each}
 		</div>
-		{#if directory.path.includes('contacto')}
-			<ContactForm />
-		{/if}
+
+		<div class="text-column">
+			<!-- Title moved up -->
+			<div class="text-content">
+				{@html directory.text || ''}
+			</div>
+			{#if directory.path.includes('contacto')}
+				<ContactForm />
+			{/if}
+		</div>
 	</div>
 </div>
 
 <style>
-	.project-container {
+	/* When no media, the text column should take full width */
+	.content-container.no-media .text-column {
+		flex: 1;
+		width: 100%;
+	}
+
+	.content-container.no-media .media-column {
+		display: none;
+	}
+
+	.content-wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		background-color: white;
+		padding: 1rem;
+	}
+
+	.content-title {
+		margin: 0;
+		font-size: 3rem; /* Bigger title */
+		line-height: 1.2;
+		padding-left: 0; /* Align with content? The layout seems flush. */
+	}
+
+	.content-container {
 		display: flex;
 		gap: 2rem;
 		color: black;
-		background-color: white;
-		padding: 1rem;
+		/* padding moved to wrapper */
 	}
 
 	.media-column {
@@ -61,6 +88,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
+		padding-top: 0; /* Remove top padding/margin if any */
 	}
 
 	.text-content {

@@ -14,8 +14,19 @@ export function load({ url }) {
     
     if (!projectInfo) {
         // Fallback or error handling if needed, though with static generation this might not happen if links are correct
-        console.error(`Project not found for path: ${url.pathname}`);
+        console.warn(`Project not found for path: ${url.pathname}, generating default info.`);
+        const name = url.pathname.split('/').filter(Boolean).pop();
+        // Create a default projectInfo object with the directory name as title
+        // structure: { title: { en: 'Name' }, ... }
+        // We assign it to a variable to merge later, or just mute the lint error.
+        // Better:
     }
+    
+    const safeProjectInfo = projectInfo || {
+        title: {
+            en: url.pathname.split('/').filter(Boolean).pop().toUpperCase()
+        }
+    };
 
     // const { media, text } = getDirectoryMedia(DIR_PATH);
 
@@ -104,7 +115,7 @@ export function load({ url }) {
 
     return {
         project: {
-            ...projectInfo,
+            ...safeProjectInfo,
             path: relativePath,
             media,
             text

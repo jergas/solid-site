@@ -28,9 +28,11 @@ export function getDirectoryMedia(dirPath) {
         .map(file => ({ filename: file }));
 
     let text = '';
-    const textFile = files.find(file => /\.txt$/i.test(file));
-    if (textFile) {
-        text = fs.readFileSync(path.join(dirPath, textFile), 'utf-8');
+    const textFiles = files.filter(file => /\.txt$/i.test(file));
+    if (textFiles.length > 0) {
+        text = textFiles
+            .map(file => fs.readFileSync(path.join(dirPath, file), 'utf-8'))
+            .join('\n\n');
     }
 
     return { media, text };

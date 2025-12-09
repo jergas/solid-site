@@ -8,18 +8,22 @@
 <!-- No longer needs the outer wrapper for positioning -->
 <div class="menu-container" transition:fade>
 	<nav>
-			<ul>
-				<li><a href="/nosotros/">NOSOTROS</a></li>
-				<li><a href="/proyectos/">PROYECTOS</a></li>
-				<li><a href="/servicios/">SERVICIOS</a></li>
-				<li><a href="/contacto/">CONTACTO</a></li>
-			</ul>
-		</nav>
-		<div class="social-icons">
-			<a href="https://tiktok.com/" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-			<a href="https://instagram.com/solidbyte.io/" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-		</div>
+		<ul>
+			<li><a href="/nosotros/" on:click={() => dispatch('close')}>NOSOTROS</a></li>
+			<li><a href="/proyectos/" on:click={() => dispatch('close')}>PROYECTOS</a></li>
+			<li><a href="/servicios/" on:click={() => dispatch('close')}>SERVICIOS</a></li>
+			<li><a href="/contacto/" on:click={() => dispatch('close')}>CONTACTO</a></li>
+		</ul>
+	</nav>
+	<div class="social-icons">
+		<a href="https://tiktok.com/" target="_blank" aria-label="TikTok"
+			><i class="fa-brands fa-tiktok"></i></a
+		>
+		<a href="https://instagram.com/solidbyte.io/" target="_blank" aria-label="Instagram"
+			><i class="fa-brands fa-instagram"></i></a
+		>
 	</div>
+</div>
 
 <style>
 	.menu-container {
@@ -28,11 +32,11 @@
 		top: 75%; /* Place it right below the icon */
 		right: 5vw; /* Was 63px */
 		transform: translateY(-0.9765vw); /* Was -25px */
-			/* background: white; */
+		/* background: white; */
 		padding: 0.75vw; /* Sets the internal spacing of the menu box */
 		width: 13vw; /* Sets the width of the menu box */
 		padding-left: 5vw; /* 20% of the container's width */
-			/* border: 0.0781vw solid black; /* Was 2px */
+		/* border: 0.0781vw solid black; /* Was 2px */
 		z-index: 20; /* Ensure it appears above other content */
 
 		/* New SVG Background */
