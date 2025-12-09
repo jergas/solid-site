@@ -8,9 +8,19 @@ const __dirname = path.dirname(__filename);
 const PROJECT_ROOT = path.resolve(__dirname, '../../');
 
 export function loadLanding() {
-    const landingPath = path.join(PROJECT_ROOT, 'landing.json');
+    let landingPath = path.join(PROJECT_ROOT, 'landing.json');
+
+    // In production build, PROJECT_ROOT might resolve differently or landing.json might not be copied where we expect.
+    // Try process.cwd() if first attempt fails.
     if (!fs.existsSync(landingPath)) {
-        throw new Error(`landing.json not found at ${landingPath}`);
+        const cwdPath = path.join(process.cwd(), 'landing.json');
+        if (fs.existsSync(cwdPath)) {
+            landingPath = cwdPath;
+        } else {
+            // Try looking in build output if needed, but usually CWD is correct for node adapter.
+            // For static adapter / prerender, it might be different.
+            throw new Error(`landing.json not found at ${landingPath} or ${cwdPath}`);
+        }
     }
     const content = fs.readFileSync(landingPath, 'utf-8');
     return JSON.parse(content);

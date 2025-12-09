@@ -18,6 +18,10 @@ export default defineConfig({
 				{
 					src: 'menu',
 					dest: '.'
+				},
+				{
+					src: 'landing.json',
+					dest: '.'
 				}
 			]
 		})
