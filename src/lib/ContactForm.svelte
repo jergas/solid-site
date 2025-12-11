@@ -1,22 +1,41 @@
 <script>
-	// Logic for form submission would go here
+	export let recipientEmail;
+
+	function handleSubmit(e) {
+		e.preventDefault();
+		const formData = new FormData(e.target);
+		const name = formData.get('name');
+		const email = formData.get('email');
+		const message = formData.get('message');
+
+		const subject = `Message from ${name}`;
+
+		// Format the body cleanly as requested
+		const body = `From: ${name} <${email}>\n\nMessage:\n${message}`;
+
+		const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+		window.location.href = mailtoLink;
+	}
 </script>
 
-<form class="contact-form">
+<form class="contact-form" on:submit={handleSubmit}>
 	<div class="form-group">
 		<label for="name" class="sr-only">Nombre</label>
-		<input type="text" id="name" name="name" placeholder="Nombre" />
+		<input type="text" id="name" name="name" placeholder="Nombre" required />
 	</div>
 
 	<div class="form-group">
 		<label for="email" class="sr-only">Correo</label>
-		<input type="email" id="email" name="email" placeholder="Correo" />
+		<input type="email" id="email" name="email" placeholder="Correo" required />
 	</div>
 
 	<div class="form-group">
 		<label for="message">Mensaje</label>
-		<textarea id="message" name="message" rows="5"></textarea>
+		<textarea id="message" name="message" rows="5" required></textarea>
 	</div>
+
+	<button type="submit">Enviar</button>
 </form>
 
 <style>
@@ -110,5 +129,20 @@
 		overflow: hidden;
 		clip: rect(0, 0, 0, 0);
 		border: 0;
+	}
+	/* ... previous styles ... */
+
+	button {
+		padding: 1rem;
+		background-color: black;
+		color: white;
+		border: none;
+		font-size: 1.2rem;
+		cursor: pointer;
+		text-transform: uppercase;
+	}
+
+	button:hover {
+		background-color: #333;
 	}
 </style>

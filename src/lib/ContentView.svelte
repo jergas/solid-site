@@ -33,11 +33,14 @@
 
 		<div class="text-column">
 			<!-- Title moved up -->
-			<div class="text-content">
-				{@html directory.text || ''}
-			</div>
+			<!-- Use a helper to replace email text with mailto links if needed, or rely on specific formatting -->
+			<!-- Since user said "as it is displayed", but "add a mailto link", we can regex replace emails in the text block -->
+			{@html (directory.text || '').replace(
+				/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi,
+				'<a href="mailto:$1">$1</a>'
+			)}
 			{#if directory.path.includes('contacto')}
-				<ContactForm />
+				<ContactForm recipientEmail={directory.recipientEmail} />
 			{/if}
 		</div>
 	</div>

@@ -109,6 +109,21 @@ export function load({ url }) {
     
     const { media, text } = data;
 
+    // Extract extracted recipient email from collected text or specific file in sourcePath
+    // We need to look specifically for a file ending in .correo.txt in sourcePath
+    let recipientEmail = '';
+    
+    // We re-read the directory to find the specific email file because getDirectoryMedia returns concatenated text.
+    // Ideally SolidLibrary should return this, but we can do a quick check here or update library.
+    // Let's do it here since we have sourcePath and fs.
+    if (fs.existsSync(sourcePath)) {
+        const files = fs.readdirSync(sourcePath);
+        const emailFile = files.find(f => /correo\.txt$/.test(f));
+        if (emailFile) {
+            recipientEmail = fs.readFileSync(path.join(sourcePath, emailFile), 'utf-8').trim();
+        }
+    }
+
     // For the frontend, the path to assets is also e.g. "work/uncertainty" 
     // because vite-plugin-static-copy copies "work" to root of build.
     const relativePath = relativeSrcPath;
@@ -118,7 +133,10 @@ export function load({ url }) {
             ...safeProjectInfo,
             path: relativePath,
             media,
-            text
+            text,
+            recipientEmail // Pass to frontend for mailto link
         }
     };
 }
+
+
