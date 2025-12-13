@@ -1,5 +1,6 @@
 <script>
 	import Menu from '$lib/Menu.svelte';
+	import ContentView from '$lib/ContentView.svelte';
 	export let data;
 	let isMenuOpen = false;
 </script>
@@ -28,19 +29,23 @@
 			{#each data.landing as item}
 				<a href={item.href} class="grid-item">
 					{#if item.img.endsWith('.mp4')}
-						<video
-							src={item.img}
-							autoplay
-							muted
-							loop
-							playsinline
-							aria-label={item.title.en}
+						<video src={item.img} autoplay muted loop playsinline aria-label={item.title.en}
 						></video>
 					{:else}
 						<img src={item.img} alt={item.title.en} />
 					{/if}
 					<div class="title">{item.title.en}</div>
 				</a>
+			{/each}
+		</div>
+
+		<!-- Infinite Scroll Sections -->
+		<div class="sections-container">
+			{#each data.sections as section}
+				<section id={section.id}>
+					<ContentView directory={section} />
+				</section>
+				<div class="separator"></div>
 			{/each}
 		</div>
 	</main>
@@ -112,7 +117,9 @@
 		height: 100%;
 		object-fit: cover;
 		display: block;
-		transition: filter 0.3s ease, transform 0.3s ease;
+		transition:
+			filter 0.3s ease,
+			transform 0.3s ease;
 	}
 
 	.grid-item:hover video {
@@ -126,7 +133,9 @@
 		object-fit: cover;
 		object-position: 50% 30%; /* default — change this to adjust focus */
 		display: block;
-		transition: filter 0.3s ease, transform 0.3s ease;
+		transition:
+			filter 0.3s ease,
+			transform 0.3s ease;
 	}
 
 	.grid-item:hover img {
@@ -162,5 +171,21 @@
 	a {
 		text-decoration: none;
 		color: inherit;
+	}
+
+	.sections-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-top: 6vw;
+	}
+
+	.sections-container section {
+		width: 90%;
+		max-width: 1300px;
+	}
+
+	.separator {
+		height: 4vw;
 	}
 </style>

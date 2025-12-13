@@ -9,10 +9,10 @@
 <div class="menu-container" transition:fade>
 	<nav>
 		<ul>
-			<li><a href="/nosotros/" on:click={() => dispatch('close')}>NOSOTROS</a></li>
-			<li><a href="/proyectos/" on:click={() => dispatch('close')}>PROYECTOS</a></li>
-			<li><a href="/servicios/" on:click={() => dispatch('close')}>SERVICIOS</a></li>
-			<li><a href="/contacto/" on:click={() => dispatch('close')}>CONTACTO</a></li>
+			<li><a href="#nosotros" on:click={() => dispatch('close')}>NOSOTROS</a></li>
+			<li><a href="#project-plataformas" on:click={() => dispatch('close')}>PROYECTOS</a></li>
+			<li><a href="#servicios" on:click={() => dispatch('close')}>SERVICIOS</a></li>
+			<li><a href="#contacto" on:click={() => dispatch('close')}>CONTACTO</a></li>
 		</ul>
 	</nav>
 	<div class="social-icons">
