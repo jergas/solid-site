@@ -1,6 +1,7 @@
 <script>
 	export let directory;
 	import ContactForm from './ContactForm.svelte';
+	import MediaCarousel from './MediaCarousel.svelte';
 
 	$: directoryMedia = directory.media
 		? directory.media.map((m) => ({
@@ -14,7 +15,10 @@
 	<h1 class="content-title">{directory.title.en}</h1>
 	<div class="content-container" class:no-media={directoryMedia.length === 0}>
 		<div class="media-column">
-			{#each directoryMedia as media}
+			{#if directoryMedia.length > 1}
+				<MediaCarousel media={directoryMedia} projectTitle={directory.title.en} />
+			{:else if directoryMedia.length === 1}
+				{@const media = directoryMedia[0]}
 				{#if media.path.endsWith('.mp4')}
 					<video
 						src={media.path}
@@ -28,7 +32,7 @@
 				{:else}
 					<img src={media.path} alt={media.title || directory.title.en} />
 				{/if}
-			{/each}
+			{/if}
 		</div>
 
 		<div class="text-column">
