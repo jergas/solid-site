@@ -30,8 +30,6 @@ function getMediaForProject(href) {
         return files.map(file => `${href}/${file}`);
 }
 
-import { getDirectoryMedia } from '$lib/SolidLibrary';
-import path from 'path';
 
 export function load() {
         const enrichedLanding = landing.map(item => ({
